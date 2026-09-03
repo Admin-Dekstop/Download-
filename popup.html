@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 250px;
+      padding: 15px;
+      margin: 0;
+      background-color: #f9f9f9;
+    }
+    h3 {
+      font-size: 14px;
+      color: #333;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    button {
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    #status {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #555;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h3>Pustaka UT Downloader</h3>
+  <button id="startBtn">Mulai Download PDF</button>
+  <div id="status">Siap berjalan...</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
