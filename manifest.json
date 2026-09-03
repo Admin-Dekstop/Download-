@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Pustaka UT Auto PDF Downloader",
+  "version": "1.0",
+  "description": "Download modul digital Pustaka UT otomatis menjadi satu file PDF bersih.",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  }
+}
