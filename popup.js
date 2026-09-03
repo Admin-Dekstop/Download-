@@ -56,13 +56,6 @@ async function runAutoDownloader() {
 
   updateStatus('Memulai proses otomatisasi...');
 
-  // Cari elemen container area baca modul (sesuaikan dengan struktur pembaca buku)
-  // Biasanya area buku berada di tengah atau menggunakan tag canvas/iframe/div reader
-  let readerArea = document.querySelector('iframe') ? document.querySelector('iframe').contentDocument : document;
-  
-  // Jika pembaca berbasis HTML/Canvas, kita cari elemen wrapper-nya
-  let targetElement = document.querySelector('.reader-container') || document.querySelector('main') || document.querySelector('#viewer') || document.body;
-
   let images = [];
   let maxPages = 200; // Batas aman maksimal halaman agar tidak infinite loop
   let currentPage = 1;
@@ -84,10 +77,9 @@ async function runAutoDownloader() {
   while (currentPage <= maxPages) {
     updateStatus(`Merekam halaman ${currentPage}...`);
     
-    // Screenshot area modul (bisa disesuaikan dengan elemen pembaca di layar kamu)
-    // Menggunakan tangkapan area spesifik agar bersih dari toolbar luar
+    // Screenshot area modul
     let canvas = await html2canvas(document.body, {
-      scale: 1.5, // Kualitas ketajaman gambar (bisa diturunkan ke 1 jika terlalu berat)
+      scale: 1.5, // Kualitas ketajaman gambar
       useCORS: true,
       logging: false,
       windowWidth: document.documentElement.scrollWidth,
@@ -96,12 +88,10 @@ async function runAutoDownloader() {
 
     images.push(canvas.toDataURL('image/jpeg', 0.85));
 
-    // Cari tombol Next (biasanya tombol panah kanan > di sisi samping pembaca)
-    // Sesuaikan selector tombol next berdasarkan halaman Pustaka UT
+    // Cari tombol Next
     let nextBtn = document.querySelector('button[aria-label*="Next"], .next-page, .fa-chevron-right, button:has(> .fa-angle-right), .right-arrow') || 
                   Array.from(document.querySelectorAll('button, div')).find(el => el.innerText.trim() === '>' || el.title?.toLowerCase().includes('next'));
 
-    // Alternatif pencarian tombol berdasarkan posisi di sisi kanan layar
     if (!nextBtn) {
       const buttons = document.querySelectorAll('button');
       for (let btn of buttons) {
@@ -136,7 +126,6 @@ async function runAutoDownloader() {
 
     for (let i = 0; i < images.length; i++) {
       if (i > 0) pdf.addPage();
-      // Masukkan gambar memenuhi ukuran halaman A4 secara proporsional
       pdf.addImage(images[i], 'JPEG', 0, 0, pageWidth, pageHeight);
     }
 
@@ -146,4 +135,4 @@ async function runAutoDownloader() {
   } catch (err) {
     updateStatus('Gagal membuat PDF: ' + err.message);
   }
-    }
+}
